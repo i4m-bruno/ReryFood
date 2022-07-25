@@ -8,5 +8,6 @@ namespace ReryFood.Models.Context
 
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<Lanche> Lanche { get; set; }
+        public DbSet<CarrinhoCompraItem> CarrinhoCompraItens { get; set; }
     }
 }

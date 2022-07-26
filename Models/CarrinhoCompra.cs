@@ -37,7 +37,7 @@ namespace ReryFood.Models
 
         public void AddItemCarrinho(Lanche lanche)
         {
-            var carrinhoItem = _context.CarrinhoCompraItens.SingleOrDefault
+            CarrinhoCompraItem carrinhoItem = _context.CarrinhoCompraItens.SingleOrDefault
                 (i => i.Lanche.LancheId == lanche.LancheId && i.CarrinhoCompraId == CarrinhoCompraId); // verifica se o item já existe no carrinho
 
             if (carrinhoItem == null)

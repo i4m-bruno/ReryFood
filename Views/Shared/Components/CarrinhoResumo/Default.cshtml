@@ -1,0 +1,12 @@
+﻿@model CarrinhoCompraViewModel
+
+@{
+    var qtdItens = Model.CarrinhoCompra.CarrinhoCompraItens.Count;
+    if (qtdItens > 0)
+    {
+        <a asp-controller="CarrinhoCompra" asp-action="Index">
+            <span><img src="~/images/cart.png" width="24px" height="24px" /></span>
+            <span style="color:white">@qtdItens</span>
+        </a>
+    }
+}

@@ -15,12 +15,7 @@ namespace ReryFood.Components
 
         public IViewComponentResult Invoke()
         {
-            var itens = new List<CarrinhoCompraItem>()
-            {
-                new CarrinhoCompraItem(),
-                new CarrinhoCompraItem(),
-                new CarrinhoCompraItem(),
-            };//_carrinho.GetItensCarrinho();
+            var itens = _carrinho.GetItensCarrinho();
             _carrinho.CarrinhoCompraItens = itens;
 
             var carrinhoVM = new CarrinhoCompraViewModel

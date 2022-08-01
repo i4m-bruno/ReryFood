@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ReryFood.Models;
 using ReryFood.Repositories.Interfaces;
 using ReryFood.ViewModels;
 
@@ -16,13 +17,33 @@ namespace ReryFood.Controllers
             _categoriaRepository = categoriaRepository;
         }
 
-        public IActionResult List()
+        public IActionResult List(string categoria)
         {
-            var lanches = _lancheRepository.Lanches;
-            var categorias = _categoriaRepository.Categorias;
+            IEnumerable<Lanche> lanches;
+            string categoriaAtual = string.Empty;
 
-            LanchesListViewModel lanchesListViewModel = new();
-            lanchesListViewModel.Lanches = lanches;
+            if (string.IsNullOrWhiteSpace(categoria))
+            {
+                lanches = _lancheRepository.Lanches.OrderBy(l => l.Nome);
+                categoriaAtual = "Todos os lanches";
+            }
+            else
+            {
+                lanches = _lancheRepository.Lanches
+                            .Where(l => l.Categoria.CategoriaNome
+                            .Equals(categoria, StringComparison.OrdinalIgnoreCase))
+                            .OrderBy(l => l.Nome);
+
+                categoriaAtual = categoria;
+            }
+
+            var lanchesListViewModel = new LanchesListViewModel()
+            {
+                CategoriaAtual = categoriaAtual,
+                Lanches = lanches,
+            };
+
+
             return View(lanchesListViewModel);
         }
     }

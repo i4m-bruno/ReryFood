@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ReryFood.Models;
 using ReryFood.Models.Context;
 using ReryFood.Repositories;
@@ -19,6 +20,11 @@ public class Startup
     {
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
         services.AddControllersWithViews();
 
         services.AddTransient<ILancheRepository, LancheRepository>();
@@ -46,9 +52,12 @@ public class Startup
             app.UseHsts();
         }
         app.UseHttpsRedirection();
+
         app.UseStaticFiles();
 
         app.UseRouting();
+
+        app.UseAuthentication();
 
         app.UseAuthorization();
 

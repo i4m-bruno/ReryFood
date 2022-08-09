@@ -47,5 +47,30 @@ namespace ReryFood.Controllers
             ModelState.AddModelError("", "Falha no login. Revise o nome de usuário e senha");
             return View(loginVM);
         }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Register(LoginViewModel registroVm)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new IdentityUser { UserName = registroVm.UserName };
+                var result = await _userManager.CreateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                else
+                {
+                    ModelState.AddModelError("Registro", "Erro ao registrar o usuário!");
+                }
+            }
+            return View(registroVm);
+        }
     }
 }

@@ -18,6 +18,9 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+
+                    @await Html.PartialAsync("_LoginPartial");
+
                     <form class="navbar-form navbar-left" asp-controller="Lanche" asp-action="Search" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Buscar produto" name="searchString" value="@ViewData["searchString"]" />
@@ -29,6 +32,7 @@
 
                     @await Component.InvokeAsync("CarrinhoResumo")
                     @await Component.InvokeAsync("CategoriaMenu")
+
                 </div>
             </div>
         </nav>

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ReryFood.Models;
 using ReryFood.Repositories.Interfaces;
 using ReryFood.ViewModels;
 
 namespace ReryFood.Controllers
 {
+    [Authorize]
     public class CarrinhoCompraController : Controller
     {
         private readonly ILancheRepository _lancheRepository;

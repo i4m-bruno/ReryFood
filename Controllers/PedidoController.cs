@@ -1,10 +1,12 @@
 ﻿using LanchesMac.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReryFood.Models;
 using ReryFood.Repositories.Interfaces;
 
 namespace ReryFood.Controllers
 {
+    [Authorize]
     public class PedidoController : Controller
     {
         private readonly IPedidoRepository _pedidoRepository;
@@ -15,7 +17,6 @@ namespace ReryFood.Controllers
             _pedidoRepository = pedidoRepository;
             _carrinhoCompra = carrinhoCompra;
         }
-
         public IActionResult Checkout()
         {
             return View();

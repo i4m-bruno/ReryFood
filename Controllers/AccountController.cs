@@ -24,6 +24,7 @@ namespace ReryFood.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
             if (!ModelState.IsValid)
@@ -33,7 +34,7 @@ namespace ReryFood.Controllers
 
             if (user != null)
             {
-                var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, loginVM.Password, false, false);
 
                 if (result.Succeeded)
                 {
@@ -54,12 +55,13 @@ namespace ReryFood.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(LoginViewModel registroVm)
         {
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = registroVm.UserName };
-                var result = await _userManager.CreateAsync(user);
+                var result = await _userManager.CreateAsync(user, registroVm.Password);
 
                 if (result.Succeeded)
                 {
@@ -71,6 +73,15 @@ namespace ReryFood.Controllers
                 }
             }
             return View(registroVm);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            HttpContext.User = null;
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

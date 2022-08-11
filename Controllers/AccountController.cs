@@ -65,6 +65,7 @@ namespace ReryFood.Controllers
 
                 if (result.Succeeded)
                 {
+                    _userManager.AddToRoleAsync(user, "Member").Wait();
                     return RedirectToAction("Login", "Account");
                 }
                 else
@@ -82,6 +83,11 @@ namespace ReryFood.Controllers
             HttpContext.User = null;
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using LanchesMac.Models;
+﻿using ReryFood.Models;
 
 namespace ReryFood.Repositories.Interfaces
 {

@@ -1,7 +1,6 @@
-﻿using ReryFood.Models;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LanchesMac.Models
+namespace ReryFood.Models
 {
     public class PedidoDetalhe
     {

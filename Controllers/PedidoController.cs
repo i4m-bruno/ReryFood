@@ -1,7 +1,6 @@
-﻿using LanchesMac.Models;
+﻿using ReryFood.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ReryFood.Models;
 using ReryFood.Repositories.Interfaces;
 
 namespace ReryFood.Controllers

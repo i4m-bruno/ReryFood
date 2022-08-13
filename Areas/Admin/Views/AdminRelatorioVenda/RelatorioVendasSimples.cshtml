@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Pedido>
+
+<h2>Pedidos Por Período</h2>
+
+<div class="panel panel-primary">
+
+    <div class="panel-heading" style="background-color:aquamarine">
+        <h5 class="panel-title">Pedidos: @Model.Count()</h5>
+        <h5 class="panel-title">Lanches: @Model.Sum(obj => obj.TotalItensPedido).ToString()</h5>
+        <h5 class="panel-title">Montante: @Model.Sum(obj => obj.PedidoTotal).ToString("c")</h5>
+    </div>
+
+    <div class="panel-body">
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr class="success">
+                    <th>
+                        @Html.DisplayNameFor(model => model.PedidoId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Telefone)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PedidoTotal)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TotalItensPedido)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PedidoEntregueEm)
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PedidoId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PedidoTotal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalItensPedido)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PedidoEntregueEm)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>

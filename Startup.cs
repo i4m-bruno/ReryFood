@@ -6,6 +6,7 @@ using ReryFood.Models.Context;
 using ReryFood.Repositories;
 using ReryFood.Repositories.Interfaces;
 using ReryFood.Services;
+using ReryFood.Areas.Admin.Servicos;
 
 namespace LanchesMac;
 public class Startup
@@ -39,6 +40,7 @@ public class Startup
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<IPedidoRepository, PedidoRepository>();
         services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+        services.AddScoped<RelatorioVendasService>();
 
         services.AddAuthorization(options =>
         {

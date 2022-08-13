@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 using ReryFood.Models;
 using ReryFood.Models.Context;
 using ReryFood.Repositories;
@@ -27,6 +28,12 @@ public class Startup
             .AddDefaultTokenProviders();
 
         services.AddControllersWithViews();
+
+        services.AddPaging(options =>
+        {
+            options.ViewName = "Bootstrap4";
+            options.PageParameterName = "pageIndex";
+        });
 
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();

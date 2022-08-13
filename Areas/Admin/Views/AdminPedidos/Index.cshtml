@@ -1,15 +1,32 @@
-﻿@model IEnumerable<ReryFood.Models.Pedido>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<ReryFood.Models.Pedido>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Pedidos</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
+<form method="get" class="form-inline">
+    <input name="filter" class="form-control" placeholder="Cliente" value="@Model.RouteValue["Filter"]" />
+    <button type="submit" class="btn btn-info">
+        <span class="glyphicon glyphicon-search" aria-hidden="true">
+        </span> Procurar
+    </button>
+</form>
+
+<br />
+
+<div>
+    <vc:pager paging-list="@Model"></vc:pager>
+</div>
+
+Total de pedidos: @Model.TotalRecordCount
+
+<p style="display:inline;float:right;margin:0;">
+    <a asp-action="Create" style="text-decoration:none;" class="btn btn-light">Criar novo pedido</a>
 </p>
-<table class="table">
+
+<table class="table" style="background-color:rgba(63,63,63,0.2)">
     <thead>
         <tr>
             <th>
@@ -35,9 +52,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Telefone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PedidoEnviado)
@@ -77,18 +91,15 @@
                     @Html.DisplayFor(modelItem => item.Telefone)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.PedidoEnviado)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PedidoEntregueEm)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.PedidoId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.PedidoId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.PedidoId">Delete</a>
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.PedidoId">Detalhes</a> <br>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.PedidoId">Editar</a> <br>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.PedidoId">Excluir</a> <br>
                 </td>
             </tr>
         }

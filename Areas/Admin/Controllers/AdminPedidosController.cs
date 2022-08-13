@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReryFood.Models.Context;
+using ReflectionIT.Mvc.Paging;
 
 namespace LanchesMac.Areas.Admin.Controllers
 {
@@ -18,9 +19,19 @@ namespace LanchesMac.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminPedidos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string filter, int pageIndex, string sort = "Nome")
         {
-            return View(await _context.Pedido.ToListAsync());
+            var resultado = _context.Pedido.AsNoTracking().AsQueryable();
+
+            if (!String.IsNullOrWhiteSpace(filter))
+            {
+                resultado = resultado.Where(p => p.Nome.Contains(filter));
+            }
+
+            var model = await PagingList.CreateAsync(resultado, 5, pageIndex, sort, "Nome");
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+
+            return View(model);
         }
 
         // GET: Admin/AdminPedidos/Details/5

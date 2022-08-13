@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 using ReryFood.Models;
 using ReryFood.Models.Context;
 
@@ -19,10 +20,19 @@ namespace LanchesMac.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminLanches
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string filter, int pageIndex, string sort = "Nome")
         {
-            var appDbContext = _context.Lanche.Include(l => l.Categoria);
-            return View(await appDbContext.ToListAsync());
+            var resultado = _context.Lanche.Include(c => c.Categoria).AsQueryable();
+
+            if (!String.IsNullOrWhiteSpace(filter))
+            {
+                resultado = resultado.Where(p => p.Nome.Contains(filter));
+            }
+
+            var model = await PagingList.CreateAsync(resultado, 5, pageIndex, sort, "Nome");
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+
+            return View(model);
         }
 
         // GET: Admin/AdminLanches/Details/5
@@ -47,7 +57,7 @@ namespace LanchesMac.Areas.Admin.Controllers
         // GET: Admin/AdminLanches/Create
         public IActionResult Create()
         {
-            ViewData["CategoriaId"] = new SelectList(_context.Lanche, "CategoriaId", "CategoriaNome");
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "CategoriaNome");
             return View();
         }
 
@@ -64,7 +74,7 @@ namespace LanchesMac.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Lanche, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
             return View(lanche);
         }
 
@@ -81,7 +91,7 @@ namespace LanchesMac.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Lanche, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
             return View(lanche);
         }
 
@@ -117,7 +127,7 @@ namespace LanchesMac.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Lanche, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
             return View(lanche);
         }
 

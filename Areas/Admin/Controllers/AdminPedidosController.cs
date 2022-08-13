@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReryFood.Models.Context;
 using ReflectionIT.Mvc.Paging;
+using ReryFood.ViewModels;
 
 namespace LanchesMac.Areas.Admin.Controllers
 {
@@ -16,6 +17,28 @@ namespace LanchesMac.Areas.Admin.Controllers
         public AdminPedidosController(AppDbContext context)
         {
             _context = context;
+        }
+
+        public IActionResult PedidoLanches(int? id)
+        {
+            var pedido = _context.Pedido
+                            .Include(p => p.PedidoItens)
+                            .ThenInclude(p => p.Lanche)
+                            .FirstOrDefault(p => p.PedidoId == id);
+
+            if (pedido == null)
+            {
+                Response.StatusCode = 404;
+                return View("PedidoNotFound", id.Value);
+            }
+
+            PedidoLancheViewModel model = new PedidoLancheViewModel
+            {
+                Pedido = pedido,
+                PedidoDetalhe = pedido.PedidoItens
+            };
+
+            return View(model);
         }
 
         // GET: Admin/AdminPedidos

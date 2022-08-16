@@ -57,6 +57,8 @@ public class Startup
         services.AddMemoryCache();
         services.AddSession();
 
+        services.Configure<ImagesConfigModel>(Configuration.GetSection("ImagesDirConfig"));
+
         services.Configure<IdentityOptions>(options =>
         {
             options.Password.RequireDigit = false;

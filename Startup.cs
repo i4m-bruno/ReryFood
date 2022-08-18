@@ -40,7 +40,9 @@ public class Startup
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<IPedidoRepository, PedidoRepository>();
         services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+
         services.AddScoped<RelatorioVendasService>();
+        services.AddScoped<GraficosVendaService>();
 
         services.AddAuthorization(options =>
         {

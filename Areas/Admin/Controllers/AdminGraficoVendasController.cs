@@ -3,6 +3,7 @@ using ReryFood.Areas.Admin.Servicos;
 
 namespace ReryFood.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AdminGraficoVendasController : Controller
     {
         private readonly GraficosVendaService _grafico;
